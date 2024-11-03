@@ -110,13 +110,13 @@ class DriverDetailView(LoginRequiredMixin, generic.DetailView):
 
 @login_required
 def assign_driver(request: HttpRequest, pk: int) -> HttpResponse:
-    car = Car.objects.get(pk=pk)
+    car = get_object_or_404(Car, pk=pk)
     car.drivers.add(request.user)
     return redirect("taxi:car-detail", pk=pk)
 
 
 @login_required
 def remove_driver(request: HttpRequest, pk: int) -> HttpResponse:
-    car = Car.objects.get(pk=pk)
+    car = get_object_or_404(Car, pk=pk)
     car.drivers.remove(request.user)
     return redirect("taxi:car-detail", pk=pk)

@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 
@@ -39,7 +40,7 @@ class DriverLicenseUpdateForm(DriverForm):
         self.fields.pop("password2", None)
 
     def save(self, commit=True) -> Driver:
-        user = super(UserCreationForm, self).save(commit=False)
+        user = super().save(commit=False)
         if commit:
             user.save()
         return user
@@ -47,7 +48,7 @@ class DriverLicenseUpdateForm(DriverForm):
 
 class CarForm(forms.ModelForm):
     drivers = forms.ModelMultipleChoiceField(
-        queryset=Car.objects.all(),
+        queryset=get_user_model().objects.all(),
         widget=forms.CheckboxSelectMultiple,
         required=False
     )
