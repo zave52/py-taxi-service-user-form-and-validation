@@ -40,7 +40,7 @@ class DriverLicenseUpdateForm(DriverForm):
         self.fields.pop("password2", None)
 
     def save(self, commit=True) -> Driver:
-        user = super().save(commit=False)
+        user = super(UserCreationForm, self).save(commit=False)
         if commit:
             user.save()
         return user
